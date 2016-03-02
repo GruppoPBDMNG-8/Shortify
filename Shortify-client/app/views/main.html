@@ -1,0 +1,31 @@
+<div class="jumbotron">
+  <p class="lead">
+  <form name="myForm" role="form" ng-submit="createURL()" novalidate>
+   <fieldset class="form-group">
+        <label >Create a short URL in a few seconds!</label>
+        <input type="text"  ng-model="longURL" placeholder="Enter your URL here" class="form-control">
+      <label><input type="checkbox" ng-model="checkCustom" value=""><small>  I want a custom alias (optional)</small></label>
+      <div class="input-group" ng-show="checkCustom">
+        <span class="input-group-addon " id="basic-addon1"><strong>http://shortify.com/</strong></span>
+        <input type="text" class="form-control" name="customURL" ng-model="customURL" ng-show="checkCustom" placeholder="Enter your custom text here">
+      </div>
+     </fieldset>
+      <button type="submit" class="btn btn-lg btn-primary"><span class="glyphicon glyphicon-ok"></span> Shortify!</button>
+  </form>
+  </p>
+</div>
+
+<div class="jumbotron">
+  <p class="lead">
+  <form name="myForm2" novalidate>
+    <fieldset class="form-group">
+      <label >Get preview and statistics from a Shortify URL</label>
+      <input type="url" class="form-control" name="statsURL" ng-model="statsURL" placeholder="Enter your URL here" ng-model-options="{ updateOn: 'blur' }">
+      <div class="alert alert-danger" ng-show="myForm.longURL.$error.url"><strong>Error! </strong>This is not a valid URL.</div>
+    </fieldset>
+    <button type="submit" class="btn btn-lg btn-primary "><span class="glyphicon glyphicon-ok"></span> Go!</button>
+  </form>
+  </p>
+</div>
+
+

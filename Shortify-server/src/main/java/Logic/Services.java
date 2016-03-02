@@ -13,6 +13,7 @@ public class Services {
         int startPoint = 0;
         String shortURL = new String();
         boolean URLinserted = false;
+        longURL = URLServices.trimHttp(longURL);
         String HashedURL = URLServices.HashURL(longURL);
 
         while (!URLinserted){
