@@ -15,7 +15,8 @@ angular
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch'
+    'ngTouch',
+    'ng.deviceDetector'
   ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -29,7 +30,13 @@ angular
         controller: 'AboutCtrl',
         controllerAs: 'about'
       })
+      .when('/:id', {
+        templateUrl: 'views/about.html',
+        controller: 'AboutCtrl',
+        controllerAs: 'about'
+      })
       .otherwise({
         redirectTo: '/'
       });
+
   });
