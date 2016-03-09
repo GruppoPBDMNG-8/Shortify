@@ -40,4 +40,8 @@ public class URLServices {
             return HashedURL.substring(startPos, startPos + URL_SIZE);
         else return null;
     }
+    public static String trimDash(String longURL){
+        if (longURL.endsWith("/")){return longURL.substring(0, longURL.length()-1);}
+            else return longURL;
+    }
 }

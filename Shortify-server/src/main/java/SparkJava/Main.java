@@ -2,7 +2,6 @@ package SparkJava;
 
 import static spark.Spark.*;
 import static spark.Spark.options;
-import Logic.Services;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import Entity.Click;
@@ -84,12 +83,13 @@ public class Main {
     private static void redirect_route(){
         get(":shorturl", (req, res) -> {
             //res.redirect(Services.redirectURL(req.params(":shorturl")));
-            String par = req.params("shorturl");
-            JsonObject jsonResponse = new JsonObject();
-            jsonResponse.addProperty("redirectURL", "http://www.google.it");
-            System.out.println("getting" + " " + par + jsonResponse.toString());
-
-            return jsonResponse;
+            // String par = req.params("shorturl");
+            //JsonObject jsonResponse = new JsonObject();
+            //jsonResponse.addProperty("redirectURL", "http://www.google.it");
+            //System.out.println("getting" + " " + par + jsonResponse.toString());
+            res.redirect("http://www.google.com");
+            //return jsonResponse;
+            return "";
         });
 
     }

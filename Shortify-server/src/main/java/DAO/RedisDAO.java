@@ -1,8 +1,12 @@
 package DAO;
 
+import Entity.Click;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.Jedis;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static java.lang.Math.toIntExact;
 
@@ -13,6 +17,7 @@ public class RedisDAO {
 
         private static final String DB_NAME = "192.168.1.107";
         private static final int DB_PORT = 32768;
+        private static final String clicks = ":clicks";
         private static final JedisPool pool = new JedisPool(new JedisPoolConfig(), DB_NAME, DB_PORT);
 
         public static String getLongURL(String shortURL){
@@ -23,12 +28,28 @@ public class RedisDAO {
             return longURL;
         }
 
-    public static int setShortURL(String shortURL, String longURL){
-        long inserted;
-        try (Jedis jedis = pool.getResource()) {
-            inserted = jedis.setnx(shortURL, longURL);
+         public static int setShortURL(String shortURL, String longURL){
+            long inserted;
+            try (Jedis jedis = pool.getResource()) {
+                inserted = jedis.setnx(shortURL, longURL);
+            }
+            return toIntExact(inserted);
         }
-        return toIntExact(inserted);
-    }
+
+        public static void setClick(String shortURL, String jsonClick){
+            try (Jedis jedis = pool.getResource()) {
+                jedis.rpush(shortURL + clicks, jsonClick);
+            }
+        }
+
+        public static List<String> getAllClicks(String shortURL){
+            List<String> jsonClicks;
+
+            try (Jedis jedis = pool.getResource()) {
+                jsonClicks = jedis.lrange(shortURL + clicks, 0,-1);
+            }
+            return jsonClicks;
+        }
+
 
 }
