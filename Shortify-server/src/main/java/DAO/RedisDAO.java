@@ -28,7 +28,7 @@ public class RedisDAO {
             return longURL;
         }
 
-         public static int setShortURL(String shortURL, String longURL){
+         public static Integer setShortURL(String shortURL, String longURL){
             long inserted;
             try (Jedis jedis = pool.getResource()) {
                 inserted = jedis.setnx(shortURL, longURL);
@@ -49,6 +49,14 @@ public class RedisDAO {
                 jsonClicks = jedis.lrange(shortURL + clicks, 0,-1);
             }
             return jsonClicks;
+        }
+
+        public static boolean exists(String shortURL){
+            boolean exists;
+            try (Jedis jedis = pool.getResource()) {
+                exists = jedis.exists(shortURL);
+            }
+            return exists;
         }
 
 
