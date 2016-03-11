@@ -70,7 +70,7 @@ public class Click {
     }
 
     public String toString(){
-        return "ip:" + this.getIp() + ", date:" + this.getDate() + ", location:" + this.getLocation() + ", userAgent:" + getUserAgent();
+        return "(ip:" + this.getIp() + ", date:" + this.getDate() + ", location:" + this.getLocation() + ", userAgent:" + getUserAgent()+")";
     }
 
 }

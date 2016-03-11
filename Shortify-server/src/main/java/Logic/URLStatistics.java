@@ -2,6 +2,7 @@ package Logic;
 
 import DAO.RedisDAO;
 import Entity.Click;
+import Exceptions.EmptyClicksException;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -20,14 +21,16 @@ public class URLStatistics {
     private String LastClickLocation;
 
     private int clicksSize;
-    private HashMap<String, Integer> UserAgentsClicks;
-    private HashMap<String,Integer> UserLocationClicks;
+    private HashMap<String,Integer> UserAgentsClicks = new HashMap<String,Integer>();
+    private HashMap<String,Integer> UserLocationClicks = new HashMap<String,Integer>();
 
 
-    public URLStatistics(String shortURL, String longURL){
+    public URLStatistics(String shortURL, String longURL) throws EmptyClicksException {
         this.longURL = longURL;
         List<Click> clickList = loadClicks(shortURL);
-        calculate(clickList);
+        System.out.println(clickList.toString());
+        if (clickList.isEmpty()) throw new EmptyClicksException("Internal server error, please try again later");
+        else calculate(clickList);
 
     }
 
@@ -45,13 +48,15 @@ public class URLStatistics {
     private void calculate(List<Click> clicksList){
         clicksSize = clicksList.size() - 1;
         URLCreationDate = clicksList.get(0).getDate();
-        LastClickDate = clicksList.get(clicksList.size()).getDate();
-        LastClickLocation = clicksList.get(clicksList.size()).getLocation();
+        LastClickDate = clicksList.get(clicksList.size()-1).getDate();
+        LastClickLocation = clicksList.get(clicksList.size()-1).getLocation();
 
         clicksList.remove(0);
         for(Click click : clicksList){
-            UserAgentsClicks.put(click.getUserAgent(), UserAgentsClicks.getOrDefault(click.getUserAgent(),1)+1);
-            UserLocationClicks.put(click.getUserAgent(), UserLocationClicks.getOrDefault(click.getUserAgent(),1)+1);
+            Integer i = UserAgentsClicks.getOrDefault(click.getUserAgent(),0);
+            Integer j =  UserLocationClicks.getOrDefault(click.getLocation(),0);
+            UserAgentsClicks.put(click.getUserAgent(), i+1);
+            UserLocationClicks.put(click.getLocation(), j+1);
         }
     }
 }

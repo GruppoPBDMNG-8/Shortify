@@ -8,12 +8,13 @@
  * Controller of the shortifyClientApp
  */
 angular.module('shortifyClientApp')
-  .controller('MainCtrl',['$scope','$routeParams','$http','deviceDetector', function ($scope,$routeParams, $http, deviceDetector ) {
+  .controller('MainCtrl',['$scope','$routeParams','$http','deviceDetector', function ( $scope,$routeParams, $http, deviceDetector ) {
     var Userdata = deviceDetector;
     $scope.showAlerts = false;
     $scope.showSuccess = false;
     $scope.longURL = '';
     $scope.customURL = '';
+    var loc = 'http://' + location.host + '/#/';
 
     $scope.createURL = function() {
       $scope.showAlerts = false;
@@ -29,7 +30,7 @@ angular.module('shortifyClientApp')
         })
         .then(function (response) {
           $scope.showSuccess = true;
-          $scope.successMessage = response.data;
+          $scope.successMessage = loc + response.data.shortURL;
         })   // success
         .catch(function (response) {
           $scope.showAlerts = true;

@@ -2,10 +2,7 @@ package Logic;
 
 import DAO.RedisDAO;
 import Entity.Click;
-import Exceptions.BlankUrlException;
-import Exceptions.CustomUrlUnavailableException;
-import Exceptions.MaxAttemptsException;
-import Exceptions.UrlNotPresentException;
+import Exceptions.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
@@ -18,12 +15,14 @@ public class Services {
     public static String setShortURL(String longURL, String customURL, String ip, String userAgent)
             throws CustomUrlUnavailableException, MaxAttemptsException, BlankUrlException {
 
-        if (longURL == "")throw new BlankUrlException("Server error, please try again");
+        if (longURL.isEmpty())throw new BlankUrlException("Server error, please try again");
         String shortURL = "";
         longURL = URLServices.trimHttp(longURL);
         longURL = URLServices.trimDash(longURL);
+        JsonObject jsonShortURL = new JsonObject();
 
-        if (customURL == "") { //SHORT THE URL
+        if (customURL.isEmpty()) { //SHORT THE URL
+            System.out.println("IM SHORTING IT - " + customURL );
             shortURL = URLServices.FindIfAlreadyShorted(longURL); //USE SHORT URL ALREADY INSERTED
             if (shortURL == "") { //CREATE A NEW SHORT URL
                 shortURL = URLServices.createShortURL(longURL);
@@ -31,6 +30,7 @@ public class Services {
             }
         }
         else { // USE CUSTOM URL
+            System.out.println("CUSTOM IT - " + customURL );
             if ((RedisDAO.setShortURL(customURL, longURL) == 0))
                 throw new CustomUrlUnavailableException("Custom URL not available, please try a different one");
             else {
@@ -39,13 +39,15 @@ public class Services {
         }
         Click click = new Click(ip, userAgent);
         RedisDAO.setClick(shortURL, new Gson().toJson(click));
-        return  new Gson().toJson(shortURL);
+
+        jsonShortURL.addProperty("shortURL", shortURL);
+        return  new Gson().toJson(jsonShortURL);
     }
 
 
 
 
-    public static  String redirectURL(String shortURL, String ip, String userAgent) throws UrlNotPresentException {
+    public static  String redirectURL(String shortURL, String ip, String userAgent) throws UrlNotPresentException, EmptyClicksException {
         String longURL = new String();
         JsonObject jsonLongURL = new JsonObject();
         String jsonResponse = new String();
@@ -55,6 +57,8 @@ public class Services {
 
         if ( URLServices.isStatsURL(shortURL)) {
             shortURL = URLServices.cutStatsChar(shortURL);
+            System.out.println("redirect is STATS (" + shortURL + ")");
+            longURL = RedisDAO.getLongURL(shortURL);
             if (longURL == null) throw new UrlNotPresentException("URL not found");
             else{
                 URLStatistics URLStats = new URLStatistics(shortURL, longURL);
@@ -63,6 +67,7 @@ public class Services {
             // statistics
         }
         else {
+            longURL = RedisDAO.getLongURL(shortURL);
             if (longURL == null) throw new UrlNotPresentException("URL not found");
             else {
                 jsonLongURL.addProperty("longURL", longURL);

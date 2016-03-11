@@ -8,8 +8,10 @@
  * Controller of the shortifyClientApp
  */
 angular.module('shortifyClientApp')
-  .controller('AboutCtrl', function ($window, $http, $routeParams) {
+  .controller('AboutCtrl', function ($scope, $window, $http, $routeParams) {
     $http.get('http://localhost:4567/' + $routeParams.id )
-      .then(function(response) {$window.location.href = response.data.redirectURL;})   // success
-      .catch(function() {$window.location.href = '/';}); // error
+      //.then(function(response) {$window.location.href = response.data.redirectURL;})   // success
+      //.catch(function() {$window.location.href = '/';}); // error
+      .then(function(response) {$scope.message = response.data;})   // success
+      .catch(function(response){$scope.message = response.data;}); // error
   });

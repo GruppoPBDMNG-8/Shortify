@@ -1,10 +1,14 @@
 package SparkJava;
 
+import static Logic.Services.redirectURL;
 import static spark.Spark.*;
 import static spark.Spark.options;
+
+import Exceptions.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import Entity.Click;
+import Logic.Services;
 
 import java.util.Objects;
 
@@ -42,16 +46,35 @@ public class Main {
     }
 
     private static void createShortURL_route(){
-        post("/inserturl", (req, res) -> /*Services.setShortURL(req.body())*/
+        post("/inserturl", (req, res) ->
         {
-            Click click = new Click(req.ip(), req.userAgent());
-            System.out.println(click.toString());
-            System.out.println(req.userAgent());
-
-            Gson gson = new Gson();
-            String jsonString = gson.toJson(click);
-
-            return jsonString;
+            String response = new String();
+            JsonObject error = new JsonObject();
+            JsonObject jsonRequest = new Gson().fromJson(req.body(),JsonObject.class);
+            System.out.println("createURL request(" + jsonRequest.get("longURL").getAsString() +
+                    ", " + jsonRequest.get("customURL").getAsString() + ") from: " + req.ip());
+            try{
+                response = Services.setShortURL(jsonRequest.get("longURL").getAsString(),
+                        jsonRequest.get("customURL").getAsString(), req.ip(),req.userAgent());
+                System.out.println("...operation successful.");
+            }catch(CustomUrlUnavailableException e){
+                System.out.println("ERROR(" + jsonRequest.get("longURL").getAsString() + ") " + e.getClass());
+                error.addProperty("error", e.getMessage());
+                res.status(500);
+                response = new Gson().toJson(error);
+            }catch(MaxAttemptsException e){
+                System.out.println("ERROR(" + jsonRequest.get("longURL").getAsString() + ") " + e.getClass());
+                error.addProperty("error", e.getMessage());
+                res.status(500);
+                response = new Gson().toJson(error);
+            }catch (BlankUrlException e){
+                System.out.println("ERROR(" + jsonRequest.get("longURL").getAsString() + ") " + e.getClass());
+                error.addProperty("error", e.getMessage());
+                res.status(500);
+                response = new Gson().toJson(error);
+            }
+            finally{System.out.println("------");}
+            return response;
 
 
 
@@ -82,14 +105,27 @@ public class Main {
 
     private static void redirect_route(){
         get(":shorturl", (req, res) -> {
-            //res.redirect(Services.redirectURL(req.params(":shorturl")));
-            // String par = req.params("shorturl");
-            //JsonObject jsonResponse = new JsonObject();
-            //jsonResponse.addProperty("redirectURL", "http://www.google.it");
-            //System.out.println("getting" + " " + par + jsonResponse.toString());
-            res.redirect("http://www.google.com");
-            //return jsonResponse;
-            return "";
+            JsonObject error = new JsonObject();
+            String response = new String();
+            System.out.println("Redirect request(" + req.params("shorturl") + ") from: " + req.ip());
+
+            try{
+                response = redirectURL(req.params("shorturl"), req.ip(), req.userAgent());
+                System.out.println("...operation successful.");
+            }catch(UrlNotPresentException e){
+                System.out.println("ERROR(" + req.params("shorturl") + ") " + e.getClass());
+                error.addProperty("error", e.getMessage());
+                res.status(500);
+                response = new Gson().toJson(error);
+            }
+            catch(EmptyClicksException e){
+                System.out.println("ERROR(" + req.params("shorturl") + ") " + e.getClass());
+                error.addProperty("error", e.getMessage());
+                res.status(500);
+                response = new Gson().toJson(error);
+            }
+            finally{System.out.println("------");}
+            return response;
         });
 
     }
