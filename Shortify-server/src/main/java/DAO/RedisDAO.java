@@ -15,7 +15,7 @@ import static java.lang.Math.toIntExact;
  */
 public class RedisDAO {
 
-        private static final String DB_NAME = "192.168.1.107";
+        private static final String DB_NAME = "192.168.1.108";
         private static final int DB_PORT = 32768;
         private static final String clicks = ":clicks";
         private static final JedisPool pool = new JedisPool(new JedisPoolConfig(), DB_NAME, DB_PORT);

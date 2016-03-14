@@ -8,25 +8,68 @@
  * Controller of the shortifyClientApp
  */
 angular.module('shortifyClientApp')
-  .controller('MainCtrl',['$scope','$routeParams','$http','deviceDetector', function ( $scope,$routeParams, $http, deviceDetector ) {
-    var Userdata = deviceDetector;
+  .controller('MainCtrl',['$window','$scope','$routeParams','$http', function ($window, $scope,$routeParams, $http ) {
+
+    const SERVER_ADDR = 'http://151.45.4.60:4567/';
+    const loc = 'http://' + location.host + '/d/#/';
+
+    $scope.exampleurlpath = loc + 'example+';
+    $scope.urlpath = loc;
     $scope.showAlerts = false;
     $scope.showSuccess = false;
+    $scope.showStats = false;
     $scope.longURL = '';
     $scope.customURL = '';
-    var loc = 'http://' + location.host + '/#/';
+    $scope.alertMessage = '';
+
+    $scope.colours=['Blue','Red','Yellow'];
+
+    if ($routeParams.id){
+      $http.get(SERVER_ADDR + $routeParams.id )
+        .then(function(response) {
+          if(response.data.redirectURL){$window.location.href = response.data.redirectURL;}
+          else {
+            $scope.showStats = true;
+            $scope.realURL = response.data.longURL;
+            $scope.creation = response.data.URLCreationDate;
+            $scope.totalClicks = response.data.clicksSize;
+            $scope.lastClick = response.data.LastClickDate + ' - ' + response.data.LastClickLocation;
+            var UserAgentsNames = [];
+            var UserAgentClicks = [];
+            for (var key in response.data.UserAgentsClicks){
+              var number = response.data.UserAgentsClicks[key];
+              UserAgentsNames.push(key);
+              UserAgentClicks.push(number);
+            }
+            $scope.labels1 =  UserAgentsNames;
+            $scope.data1 = UserAgentClicks;
+
+            var LocationNames = [];
+            var LocationClicks = [];
+            for (var key2 in response.data.UserLocationClicks){
+              var number2 = response.data.UserLocationClicks[key2];
+              LocationNames.push(key2);
+              LocationClicks.push(number2);
+            }
+            $scope.labels2 =  LocationNames;
+            $scope.data2 = LocationClicks;
+          }
+        }) // success
+        .catch(function() {$window.location.href = '/';}); // error
+    }
+
+
 
     $scope.createURL = function() {
       $scope.showAlerts = false;
       $scope.showSuccess = false;
+      $scope.showStats = false;
       if ($scope.myForm.longURL.$valid && $scope.myForm.customURL.$valid ) {
 
-      $http.post('http://localhost:4567/inserturl',
+      $http.post(SERVER_ADDR + 'inserturl',
         {
           longURL: $scope.longURL,
-          customURL: $scope.customURL,
-          userAgent: Userdata.browser,
-          os: Userdata.os
+          customURL: $scope.customURL
         })
         .then(function (response) {
           $scope.showSuccess = true;
@@ -36,6 +79,7 @@ angular.module('shortifyClientApp')
           $scope.showAlerts = true;
           $scope.alertMessage = response.data.error;
         }); // error
+        if($scope.alertMessage === ''){$scope.alertMessage = 'Server error, please try again';}
       }
       };
   }])
@@ -60,3 +104,4 @@ angular.module('shortifyClientApp')
     }
   };
 });
+

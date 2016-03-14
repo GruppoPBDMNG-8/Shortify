@@ -70,7 +70,7 @@ public class Services {
             longURL = RedisDAO.getLongURL(shortURL);
             if (longURL == null) throw new UrlNotPresentException("URL not found");
             else {
-                jsonLongURL.addProperty("longURL", longURL);
+                jsonLongURL.addProperty("redirectURL", longURL);
                 jsonResponse = gson.toJson(jsonLongURL);
                 Click click = new Click(ip, userAgent);
                 RedisDAO.setClick(shortURL, new Gson().toJson(click));

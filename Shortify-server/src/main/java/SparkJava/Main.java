@@ -55,7 +55,9 @@ public class Main {
                     ", " + jsonRequest.get("customURL").getAsString() + ") from: " + req.ip());
             try{
                 response = Services.setShortURL(jsonRequest.get("longURL").getAsString(),
-                        jsonRequest.get("customURL").getAsString(), req.ip(),req.userAgent());
+                        jsonRequest.get("customURL").getAsString(),
+                        req.ip(),req.userAgent());
+
                 System.out.println("...operation successful.");
             }catch(CustomUrlUnavailableException e){
                 System.out.println("ERROR(" + jsonRequest.get("longURL").getAsString() + ") " + e.getClass());
@@ -111,7 +113,7 @@ public class Main {
 
             try{
                 response = redirectURL(req.params("shorturl"), req.ip(), req.userAgent());
-                System.out.println("...operation successful.");
+                System.out.println("...operation successful." + response);
             }catch(UrlNotPresentException e){
                 System.out.println("ERROR(" + req.params("shorturl") + ") " + e.getClass());
                 error.addProperty("error", e.getMessage());
