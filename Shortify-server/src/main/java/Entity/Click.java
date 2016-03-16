@@ -1,6 +1,6 @@
-package Entity;
+package entity;
 
-import Logic.IpLocationServices;
+import logic.IpLocationServices;
 import com.maxmind.geoip2.exception.GeoIp2Exception;
 
 import java.io.IOException;
@@ -25,7 +25,7 @@ public class Click {
     }
 
     public void setLocation(String ip){
-        String loc = "IT";
+        String loc = "Unknown";
         IpLocationServices ipLoc = new IpLocationServices();
         try {
             loc = ipLoc.getCountry(ip);

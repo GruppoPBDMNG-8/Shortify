@@ -1,8 +1,8 @@
-package Logic;
+package logic;
 
-import DAO.RedisDAO;
-import Entity.Click;
-import Exceptions.*;
+import dao.RedisDAO;
+import entity.Click;
+import exceptions.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
@@ -22,7 +22,7 @@ public class Services {
         JsonObject jsonShortURL = new JsonObject();
 
         if (customURL.isEmpty()) { //SHORT THE URL
-            System.out.println("IM SHORTING IT - " + customURL );
+           // System.out.println("IM SHORTING IT - " + customURL );
             shortURL = URLServices.FindIfAlreadyShorted(longURL); //USE SHORT URL ALREADY INSERTED
             if (shortURL == "") { //CREATE A NEW SHORT URL
                 shortURL = URLServices.createShortURL(longURL);
@@ -30,7 +30,7 @@ public class Services {
             }
         }
         else { // USE CUSTOM URL
-            System.out.println("CUSTOM IT - " + customURL );
+           // System.out.println("CUSTOM IT - " + customURL );
             if ((RedisDAO.setShortURL(customURL, longURL) == 0))
                 throw new CustomUrlUnavailableException("Custom URL not available, please try a different one");
             else {
@@ -57,7 +57,7 @@ public class Services {
 
         if ( URLServices.isStatsURL(shortURL)) {
             shortURL = URLServices.cutStatsChar(shortURL);
-            System.out.println("redirect is STATS (" + shortURL + ")");
+           // System.out.println("redirect is STATS (" + shortURL + ")");
             longURL = RedisDAO.getLongURL(shortURL);
             if (longURL == null) throw new UrlNotPresentException("URL not found");
             else{

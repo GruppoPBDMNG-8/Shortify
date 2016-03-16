@@ -1,8 +1,8 @@
-package Logic;
+package logic;
 
-import DAO.RedisDAO;
-import Entity.Click;
-import Exceptions.EmptyClicksException;
+import dao.RedisDAO;
+import entity.Click;
+import exceptions.EmptyClicksException;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;

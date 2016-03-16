@@ -1,11 +1,9 @@
-package DAO;
+package dao;
 
-import Entity.Click;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.Jedis;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static java.lang.Math.toIntExact;
@@ -58,6 +56,23 @@ public class RedisDAO {
             }
             return exists;
         }
+
+    public static boolean isPopulated(){
+        boolean isPopulated = false;
+        String result = null;
+        try (Jedis jedis = pool.getResource()) {
+            result = jedis.get("db_is_populated");
+            if (result != null) isPopulated = true;
+        }
+        return isPopulated;
+    }
+
+    public static void setPopulated(){
+        long inserted;
+        try (Jedis jedis = pool.getResource()) {
+            inserted = jedis.setnx("db_is_populated", "yes, it is");
+        }
+    }
 
 
 }

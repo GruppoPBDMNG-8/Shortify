@@ -1,10 +1,14 @@
-package Logic;
+package logic;
 
-import DAO.RedisDAO;
-import Exceptions.*;
+import dao.RedisDAO;
+import exceptions.*;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import java.util.HashMap;
 import java.util.Random;
+
+import com.google.common.net.InetAddresses;
 
 /**
  * Created by Giuseppe on 15/03/2016.
@@ -13,28 +17,38 @@ public class Populator {
 
     private HashMap<String,String> URLs = new HashMap<String,String>();
 
-    public void Populator(int nURLs, int nClicks){
+    public Populator(int nURLs, int nClicks){
+        System.out.println("Populating db...");
+        long startTime = System.currentTimeMillis();
         if (!RedisDAO.isPopulated()){
             insertCustomURLs();
             insertRandomURLs(nURLs);
             insertClicks(nClicks);
             RedisDAO.setPopulated();
+            System.out.println("...db populated with " + nURLs + "URLs and " + nClicks + " clicks" );
+            //System.out.println(URLs.toString());
         }
+        else System.out.println("...db already populated");
+        long endTime   = System.currentTimeMillis();
+        long totalTime = endTime - startTime;
+        System.out.println("time taken:" + totalTime);
     }
 
     private String generateIp(){
         Random rnd = new Random();
-        Integer n1 = rnd.nextInt(254);
+        /*Integer n1 = rnd.nextInt(254);
         Integer n2 = rnd.nextInt(254);
         Integer n3 = rnd.nextInt(254);
         Integer n4 = rnd.nextInt(254);
-        String ip = n1.toString() + "." + n2.toString() + "." + n3.toString() + "." + n4.toString();
-        return ip;
+        String ip = n1.toString() + "." + n2.toString() + "." + n3.toString() + "." + n4.toString();*/
+        String ipString = InetAddresses.fromInteger(rnd.nextInt()).getHostAddress();
+        //System.out.println(ipString);
+        return ipString;
     }
 
     private String generateUserAgent(){
         Random rnd = new Random();
-        String browsers[] = new String[4];
+        String browsers[] = new String[5];
         browsers[0] = "Chrome";
         browsers[1] = "Firefox";
         browsers[2] = "Safari";
@@ -47,15 +61,16 @@ public class Populator {
     private void insertCustomURLs(){
 
         URLs.put("http://www.google.it","example");
-        URLs.put("http://www.facebook.com",null);
-        URLs.put("http://www.redis.io",null);
-        URLs.put("https://www.youtube.com/watch?v=dQw4w9WgXcQ",null);
-        URLs.put("http://www.reddit.com",null);
-        URLs.put("http://www.uniba.it/ricerca/dipartimenti/informatica",null);
+        URLs.put("http://www.facebook.com","face");
+        URLs.put("http://www.redis.io","redis");
+        URLs.put("https://www.youtube.com/watch?v=dQw4w9WgXcQ","rick");
+        URLs.put("http://www.reddit.com","reddit");
+        URLs.put("http://www.uniba.it/ricerca/dipartimenti/informatica","dib");
         for(String key : URLs.keySet()){
             try {
                 String shortURL = Services.setShortURL(key,URLs.get(key),generateIp(),generateUserAgent());
-                URLs.put(key,shortURL);
+                JsonObject jsonRequest = new Gson().fromJson(shortURL,JsonObject.class);
+                URLs.put(key,jsonRequest.get("shortURL").getAsString());
             } catch (CustomUrlUnavailableException e) {
                 e.printStackTrace();
             } catch (MaxAttemptsException e) {
@@ -72,8 +87,9 @@ public class Populator {
         for (int i = 0; i < n; i++){
             String longURL = generateRandomURL();
             try {
-                String shortURL = Services.setShortURL(longURL,null,generateIp(),generateUserAgent());
-                URLs.put(longURL,shortURL);
+                String shortURL = Services.setShortURL(longURL,"",generateIp(),generateUserAgent());
+                JsonObject jsonRequest = new Gson().fromJson(shortURL,JsonObject.class);
+                URLs.put(longURL,jsonRequest.get("shortURL").getAsString());
             } catch (CustomUrlUnavailableException e) {
                 e.printStackTrace();
             } catch (MaxAttemptsException e) {

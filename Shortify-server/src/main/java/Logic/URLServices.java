@@ -1,6 +1,6 @@
-package Logic;
+package logic;
 
-import DAO.RedisDAO;
+import dao.RedisDAO;
 import org.apache.commons.codec.digest.DigestUtils;
 
 /**
@@ -47,7 +47,7 @@ public class URLServices {
 
     public static String HashURL(String longURL) {
         String hash40 = DigestUtils.sha1Hex(longURL);
-        System.out.println("Hash: " + hash40);
+        //System.out.println("Hash: " + hash40);
         return hash40;
     }
 
@@ -83,6 +83,7 @@ public class URLServices {
         while (!URLinserted && startPoint <= MAX_TRIMMING_ATTEMPTS){
             shortURL = URLServices.trimHashedURL(HashedURL,startPoint);
             if((RedisDAO.setShortURL(shortURL,longURL) == 0) && (RedisDAO.getLongURL(shortURL) == longURL)) {
+                System.out.println("COLLISION DETECTED: " + shortURL);
                 startPoint++;
             }else URLinserted = true;
         }

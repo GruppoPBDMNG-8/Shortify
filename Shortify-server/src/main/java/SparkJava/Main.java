@@ -1,16 +1,14 @@
-package SparkJava;
+package sparkjava;
 
-import static Logic.Services.redirectURL;
+import static logic.Services.redirectURL;
 import static spark.Spark.*;
 import static spark.Spark.options;
 
-import Exceptions.*;
+import exceptions.*;
+import logic.Populator;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import Entity.Click;
-import Logic.Services;
-
-import java.util.Objects;
+import logic.Services;
 
 
 /**
@@ -22,6 +20,7 @@ public class Main {
     public static void main(String[] args) {
 
         setRoutes();
+        Populator populator = new Populator(15,1000);
 
         //Jedis jedis = new Jedis("192.168.1.107",32769);
 
