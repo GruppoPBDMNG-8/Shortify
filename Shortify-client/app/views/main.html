@@ -7,7 +7,8 @@
         <label><input type="checkbox" ng-model="checkCustom" value=""><small>  I want a custom alias (optional)</small></label>
         <div class="input-group" ng-show="checkCustom">
           <span class="input-group-addon " id="basic-addon1"><strong>{{urlpath}}</strong></span>
-          <input type="text" class="form-control" name="customURL" ng-model="customURL" ng-show="checkCustom" placeholder="Enter your custom text here" ng-minlength="3" ng-maxlength="30">
+          <input type="text" class="form-control" name="customURL" ng-model="customURL" ng-show="checkCustom" placeholder="Enter your custom text here" ng-minlength="3" ng-maxlength="30"
+                 ng-trim="false" ng-change="customURL = customURL.split(' ').join('')">
         </div>
    </fieldset>
       <button type="submit" class="btn btn-lg btn-primary"><span class="glyphicon glyphicon-ok"></span> Shortify!</button>
@@ -25,7 +26,7 @@
   <div class="alert alert-danger"  ng-show="myForm.longURL.$error.maxlength && myForm.$submitted"><span><strong>Error: URL max length is 200</strong></span></div>
   <div class="alert alert-danger"  ng-show="myForm.longURL.$error.url && myForm.$submitted"><span><strong>Error: URL is not valid</strong></span></div>
   <div class="alert alert-danger"  ng-show="(myForm.customURL.$error.maxlength || myForm.customURL.$error.minlength) && myForm.$submitted"><span><strong>Error: Custom alias length must be between 3 and 30 chars</strong></span></div>
-
+  <div class="alert alert-danger"  ng-show="showRedirectAlert"><span><strong>Error: URL is not valid, cant redirect to this domain.</strong></span></div>
   <!-- SERVER RESPONSE -->
   <div class="alert alert-success"  ng-show="showSuccess"><span><strong>Your short URL:<h2><a href="{{successMessage}}">{{successMessage}}</a></h2></strong>
  <br><br> <i>To show preview and statistics use <a href="{{successMessage}}+">{{successMessage}}+</a></i></span></div>
@@ -52,3 +53,5 @@
   </canvas>
   </div>
 </div>
+
+{{mess}}

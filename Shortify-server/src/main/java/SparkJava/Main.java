@@ -18,9 +18,9 @@ public class Main {
     //public RedisDAO redisDAO = new RedisDAO();
 
     public static void main(String[] args) {
-
-        setRoutes();
         Populator populator = new Populator(15,1000);
+        setRoutes();
+
 
         //Jedis jedis = new Jedis("192.168.1.107",32769);
 
@@ -41,6 +41,7 @@ public class Main {
         enableCORS();
         createShortURL_route();
         redirect_route();
+
 
     }
 
@@ -69,6 +70,11 @@ public class Main {
                 res.status(500);
                 response = new Gson().toJson(error);
             }catch (BlankUrlException e){
+                System.out.println("ERROR(" + jsonRequest.get("longURL").getAsString() + ") " + e.getClass());
+                error.addProperty("error", e.getMessage());
+                res.status(500);
+                response = new Gson().toJson(error);
+            }catch(BadWordException e){
                 System.out.println("ERROR(" + jsonRequest.get("longURL").getAsString() + ") " + e.getClass());
                 error.addProperty("error", e.getMessage());
                 res.status(500);

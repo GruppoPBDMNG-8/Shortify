@@ -18,6 +18,7 @@ angular.module('shortifyClientApp')
     $scope.showAlerts = false;
     $scope.showSuccess = false;
     $scope.showStats = false;
+    $scope.showRedirectAlert = false;
     $scope.longURL = '';
     $scope.customURL = '';
     $scope.alertMessage = '';
@@ -64,23 +65,24 @@ angular.module('shortifyClientApp')
       $scope.showAlerts = false;
       $scope.showSuccess = false;
       $scope.showStats = false;
-      if ($scope.myForm.longURL.$valid && $scope.myForm.customURL.$valid ) {
 
-      $http.post(SERVER_ADDR + 'inserturl',
-        {
-          longURL: $scope.longURL,
-          customURL: $scope.customURL
-        })
-        .then(function (response) {
-          $scope.showSuccess = true;
-          $scope.successMessage = loc + response.data.shortURL;
-        })   // success
-        .catch(function (response) {
-          $scope.showAlerts = true;
-          $scope.alertMessage = response.data.error;
-        }); // error
-        if($scope.alertMessage === ''){$scope.alertMessage = 'Server error, please try again';}
-      }
+        if ($scope.myForm.longURL.$valid && $scope.myForm.customURL.$valid ) {
+
+        $http.post(SERVER_ADDR + 'inserturl',
+          {
+            longURL: $scope.longURL,
+            customURL: $scope.customURL
+          })
+          .then(function (response) {
+            $scope.showSuccess = true;
+            $scope.successMessage = loc + response.data.shortURL;
+          })   // success
+          .catch(function (response) {
+            $scope.showAlerts = true;
+            $scope.alertMessage = response.data.error;
+          }); // error
+          if($scope.alertMessage === ''){$scope.alertMessage = 'Server error, please try again';}
+        }
       };
   }])
   .directive('httpPrefix', function() {
