@@ -16,7 +16,7 @@ public class IpLocationServices {
 
     // A File object pointing to your GeoIP2 or GeoLite2 database
     private File database;
-    private static final String dbPath = "/Shortify-server/src/main/java/Logic/GeoLite2-Country.mmdb";
+    private static final String dbPath = "/Shortify-server/src/main/java/logic/GeoLite2-Country.mmdb";
     private DatabaseReader reader;
 
     // This creates the DatabaseReader object, which should be reused across
