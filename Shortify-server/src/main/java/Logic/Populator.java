@@ -77,6 +77,8 @@ public class Populator {
                 e.printStackTrace();
             } catch (BlankUrlException e) {
                 e.printStackTrace();
+            } catch (BadWordException e) {
+                e.printStackTrace();
             }
         }
 
@@ -95,6 +97,8 @@ public class Populator {
             } catch (MaxAttemptsException e) {
                 e.printStackTrace();
             } catch (BlankUrlException e) {
+                e.printStackTrace();
+            } catch (BadWordException e) {
                 e.printStackTrace();
             }
         }

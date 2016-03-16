@@ -13,7 +13,7 @@ public class Services {
 
 
     public static String setShortURL(String longURL, String customURL, String ip, String userAgent)
-            throws CustomUrlUnavailableException, MaxAttemptsException, BlankUrlException {
+            throws CustomUrlUnavailableException, MaxAttemptsException, BlankUrlException, BadWordException {
 
         if (longURL.isEmpty())throw new BlankUrlException("Server error, please try again");
         String shortURL = "";
@@ -31,6 +31,7 @@ public class Services {
         }
         else { // USE CUSTOM URL
            // System.out.println("CUSTOM IT - " + customURL );
+            if (BadWordsFilter.isBadword(customURL)) throw new BadWordException("Custom URL not available, please try a different one");
             if ((RedisDAO.setShortURL(customURL, longURL) == 0))
                 throw new CustomUrlUnavailableException("Custom URL not available, please try a different one");
             else {
