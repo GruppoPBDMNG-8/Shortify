@@ -1,10 +1,6 @@
-package logic;
+package entity;
 
-import dao.RedisDAO;
-import entity.Click;
-import exceptions.EmptyClicksException;
 import com.google.gson.Gson;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,24 +21,14 @@ public class URLStatistics {
     private HashMap<String,Integer> UserLocationClicks = new HashMap<String,Integer>();
 
 
-    public URLStatistics(String shortURL, String longURL) throws EmptyClicksException {
-        this.longURL = longURL;
-        List<Click> clickList = loadClicks(shortURL);
-        System.out.println(clickList.toString());
-        if (clickList.isEmpty()) throw new EmptyClicksException("Internal server error, please try again later");
-        else calculate(clickList);
-
-    }
-
-    private List<Click> loadClicks (String shortURL){
+    public URLStatistics(String URL, List<String> stringClicks){
+        this.longURL = URL;
         List<Click> clicksList = new ArrayList<>();
         Gson gson = new Gson();
-        List<String> jsonClicks = RedisDAO.getAllClicks(shortURL);
-
-        for ( String stringClick : jsonClicks){
+        for ( String stringClick : stringClicks){
             clicksList.add(gson.fromJson(stringClick,Click.class));
         }
-        return clicksList;
+        calculate(clicksList);
     }
 
     private void calculate(List<Click> clicksList){
@@ -59,4 +45,10 @@ public class URLStatistics {
             UserLocationClicks.put(click.getLocation(), j+1);
         }
     }
+
+    public String getLastClickLocation() {return LastClickLocation;}
+    public String getLastClickDate() {return LastClickDate;}
+    public String getURLCreationDate() {return URLCreationDate;}
+    public String getLongURL() {return longURL;}
+    public int getClicksSize() {return clicksSize;}
 }

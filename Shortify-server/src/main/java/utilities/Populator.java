@@ -1,6 +1,5 @@
-package logic;
+package utilities;
 
-import dao.RedisDAO;
 import exceptions.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -9,6 +8,7 @@ import java.util.HashMap;
 import java.util.Random;
 
 import com.google.common.net.InetAddresses;
+import logic.Services;
 
 /**
  * Created by Giuseppe on 15/03/2016.
@@ -20,11 +20,11 @@ public class Populator {
     public Populator(int nURLs, int nClicks){
         System.out.println("Populating db...");
         long startTime = System.currentTimeMillis();
-        if (!RedisDAO.isPopulated()){
+        if (!Services.DBisPopulated()){
             insertCustomURLs();
             insertRandomURLs(nURLs);
             insertClicks(nClicks);
-            RedisDAO.setPopulated();
+            Services.setDBisPopulated();
             System.out.println("...db populated with " + nURLs + "URLs and " + nClicks + " clicks" );
             //System.out.println(URLs.toString());
         }
@@ -36,13 +36,7 @@ public class Populator {
 
     private String generateIp(){
         Random rnd = new Random();
-        /*Integer n1 = rnd.nextInt(254);
-        Integer n2 = rnd.nextInt(254);
-        Integer n3 = rnd.nextInt(254);
-        Integer n4 = rnd.nextInt(254);
-        String ip = n1.toString() + "." + n2.toString() + "." + n3.toString() + "." + n4.toString();*/
         String ipString = InetAddresses.fromInteger(rnd.nextInt()).getHostAddress();
-        //System.out.println(ipString);
         return ipString;
     }
 

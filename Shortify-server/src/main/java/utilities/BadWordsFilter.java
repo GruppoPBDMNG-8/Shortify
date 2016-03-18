@@ -1,4 +1,4 @@
-package logic;
+package utilities;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 public class BadWordsFilter {
 
-    private static final String filePath = "/Shortify-server/src/main/java/logic/badwords_eng.txt";
+    private static final String filePath = "/Shortify-server/src/main/java/utilities/files/badwords_eng.txt";
     private static final ArrayList<String> badwords = new ArrayList<String>();
     static {
 
@@ -29,12 +29,6 @@ public class BadWordsFilter {
             e.printStackTrace();
         }
 
-
-        System.out.println("Loading badwords list");
-    }
-
-    public static void print(){
-        System.out.println(badwords.toString());
     }
 
     public static boolean isBadword(String word){

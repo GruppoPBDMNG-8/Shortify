@@ -1,6 +1,6 @@
 package entity;
 
-import logic.IpLocationServices;
+import utilities.IpLocationServices;
 import com.maxmind.geoip2.exception.GeoIp2Exception;
 
 import java.io.IOException;
@@ -48,7 +48,7 @@ public class Click {
         this.userAgent = userAgent;
     }
 
-    private void setDate(){
+    public void setDate(){
         LocalDateTime nowTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd-MM-yyyy");
         this.date = nowTime.format(formatter);
@@ -57,14 +57,12 @@ public class Click {
     public String getIp(){
         return this.ip;
     }
-
     public String getLocation(){
         return this.location;
     }
     public String getUserAgent(){
         return this.userAgent;
     }
-
     public String getDate(){
         return date.toString();
     }

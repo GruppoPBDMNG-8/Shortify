@@ -3,11 +3,11 @@ package sparkjava;
 import static logic.Services.redirectURL;
 import static spark.Spark.*;
 import static spark.Spark.options;
-
-import exceptions.*;
-import logic.Populator;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+
+import exceptions.*;
+import utilities.Populator;
 import logic.Services;
 
 
@@ -15,34 +15,16 @@ import logic.Services;
  * Created by Giuseppe on 24/02/2016.
  */
 public class Main {
-    //public RedisDAO redisDAO = new RedisDAO();
 
     public static void main(String[] args) {
-        Populator populator = new Populator(15,1000);
+        new Populator(15,1000);
         setRoutes();
-
-
-        //Jedis jedis = new Jedis("192.168.1.107",32769);
-
-      //  get("/hello", (req, res) -> "Hello World");
-       // get("/", (req, res) -> jedis.ping());
-       // post("inserturl", (req, res) -> jedis.set(req.body(),req.body()));
-        //get("/:shorturl", (req, res) -> jedis.get(req.params(":shorturl")));
-        /*get("/re/:shorturl", (req, res) -> {
-            String url = jedis.get(req.params(":shorturl"));
-            System.out.println(url);
-            res.body("done");
-            res.redirect("http://www.google.com");
-            return null;
-        });*/
     }
 
     private static void setRoutes(){
         enableCORS();
         createShortURL_route();
         redirect_route();
-
-
     }
 
     private static void createShortURL_route(){
@@ -82,30 +64,6 @@ public class Main {
             }
             finally{System.out.println("------");}
             return response;
-
-
-
-
-            /*Gson gson = new Gson();
-            JsonObject jsonRequest = gson.fromJson(req.body(), JsonObject.class);
-            String longUrl = jsonRequest.get("longURL").getAsString();
-            String custom = jsonRequest.get("customURL").getAsString();
-            System.out.println(longUrl + " "  + custom);
-            JsonObject jsonResponse = new JsonObject();
-
-
-
-            if (Objects.equals(longUrl, "getError")){
-                jsonResponse.addProperty("error", "this is an error message");
-                res.status(500);
-                System.out.println("sending error");
-            }
-            else{
-                jsonResponse.addProperty("long", longUrl);
-                jsonResponse.addProperty("cust", custom);
-                System.out.println("sending normal response");
-            }
-            return jsonResponse;*/
         });
 
     }
@@ -118,7 +76,7 @@ public class Main {
 
             try{
                 response = redirectURL(req.params("shorturl"), req.ip(), req.userAgent());
-                System.out.println("...operation successful." + response);
+                System.out.println("...operation successful.");
             }catch(UrlNotPresentException e){
                 System.out.println("ERROR(" + req.params("shorturl") + ") " + e.getClass());
                 error.addProperty("error", e.getMessage());
