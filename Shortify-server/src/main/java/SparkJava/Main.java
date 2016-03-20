@@ -12,21 +12,33 @@ import logic.Services;
 
 
 /**
- * Created by Giuseppe on 24/02/2016.
+ * Created by Giuseppe Perniola on 24/02/2016.
  */
 public class Main {
 
+    /**
+     * Entry point. Populates the db and starts the REST routes
+     * @param args
+     */
     public static void main(String[] args) {
         new Populator(15,1000);
         setRoutes();
     }
 
+    /**
+     * Enables CORS and starts the routes
+     */
     private static void setRoutes(){
         enableCORS();
         createShortURL_route();
         redirect_route();
     }
 
+
+    /**
+     * POST route which gets the long url from the client and generates a short url. Returns
+     * a json string containing the short url or an error message
+     */
     private static void createShortURL_route(){
         post("/inserturl", (req, res) ->
         {
@@ -68,6 +80,10 @@ public class Main {
 
     }
 
+    /**
+     * GET route which gets the short url from the client and sends a json string containing the long url or
+     * the statistics associated to it.
+     */
     private static void redirect_route(){
         get(":shorturl", (req, res) -> {
             JsonObject error = new JsonObject();
@@ -95,6 +111,9 @@ public class Main {
 
     }
 
+    /**
+     * enables CORS to allow requests from the client on another domain
+     */
     private static void enableCORS(){
         options("/*", (request, response) -> {
 

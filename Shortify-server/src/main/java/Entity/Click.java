@@ -8,7 +8,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
- * Created by Giuseppe on 08/03/2016.
+ * Entity which models a click from a user to a short url. Stores user ip, location, browser and date/time of the click.
+ * Created by Giuseppe Perniola on 08/03/2016.
  */
 public class Click {
 
@@ -17,6 +18,11 @@ public class Click {
     private String userAgent;
     private String date;
 
+    /**
+     * Constructor
+     * @param new_ip
+     * @param new_userAgent
+     */
     public Click(String new_ip, String new_userAgent){
         this.ip = new_ip;
         setLocation(new_ip);
@@ -24,6 +30,10 @@ public class Click {
         setUserAgent(new_userAgent);
     }
 
+    /**
+     * Given an ip, finds the country associated to it and sets the location field in the object.
+     * @param ip
+     */
     public void setLocation(String ip){
         String loc = "Unknown";
         IpLocationServices ipLoc = new IpLocationServices();
@@ -37,6 +47,10 @@ public class Click {
         this.location = loc;
     }
 
+    /**
+     * Given a userAgent string, finds which browser is associated to it and sets the userAgent field in the object.
+     * @param new_userAgent
+     */
     public void setUserAgent(String new_userAgent){
         String userAgent = "Unknown";
         if (new_userAgent.contains("Chrome")) { userAgent = "Chrome";}
@@ -48,11 +62,15 @@ public class Click {
         this.userAgent = userAgent;
     }
 
+    /**
+     * Calculates the current date and time and sets the date field in the object.
+     */
     public void setDate(){
         LocalDateTime nowTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd-MM-yyyy");
         this.date = nowTime.format(formatter);
     }
+
 
     public String getIp(){
         return this.ip;
