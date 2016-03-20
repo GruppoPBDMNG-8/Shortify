@@ -11,12 +11,18 @@ import com.google.common.net.InetAddresses;
 import logic.Services;
 
 /**
- * Created by Giuseppe on 15/03/2016.
+ * Contains functions to generate random urls and clicks to populate an empty db.
+ * Created by Giuseppe Perniola on 15/03/2016.
  */
 public class Populator {
 
     private HashMap<String,String> URLs = new HashMap<String,String>();
 
+    /**
+     * Populates the db with a list of custom and random urls and clicks
+     * @param nURLs number of random url to insert
+     * @param nClicks number of random clicks to insert
+     */
     public Populator(int nURLs, int nClicks){
         System.out.println("Populating db...");
         long startTime = System.currentTimeMillis();
@@ -34,12 +40,20 @@ public class Populator {
         System.out.println("time taken:" + totalTime);
     }
 
+    /**+
+     * generates a random ip
+     * @return
+     */
     private String generateIp(){
         Random rnd = new Random();
         String ipString = InetAddresses.fromInteger(rnd.nextInt()).getHostAddress();
         return ipString;
     }
 
+    /**
+     * generates a random userAgent
+     * @return
+     */
     private String generateUserAgent(){
         Random rnd = new Random();
         String browsers[] = new String[5];
@@ -52,8 +66,10 @@ public class Populator {
         return browsers[rnd.nextInt(5)];
     }
 
+    /**
+     * Inserts a list of customized url in the db.
+     */
     private void insertCustomURLs(){
-
         URLs.put("http://www.google.it","example");
         URLs.put("http://www.facebook.com","face");
         URLs.put("http://www.redis.io","redis");
@@ -79,6 +95,10 @@ public class Populator {
 
     }
 
+    /**
+     * Inserts n random urls in the db
+     * @param n number of random urls to generate
+     */
     private void insertRandomURLs(int n){
         for (int i = 0; i < n; i++){
             String longURL = generateRandomURL();
@@ -98,6 +118,10 @@ public class Populator {
         }
     }
 
+    /**
+     * generates a new random url with random chars
+     * @return
+     */
     private String generateRandomURL(){
         char[] chars = "abcdefghijklmnopqrstuvwxyz".toCharArray();
         StringBuilder sb = new StringBuilder();
@@ -111,6 +135,10 @@ public class Populator {
         return output;
     }
 
+    /**
+     * inserts n clicks distributed randomly between the urls in the db.
+     * @param n number of clicks to generate
+     */
     private void insertClicks(int n){
         Random rnd = new Random();
         Object[] shortURLs = URLs.values().toArray();

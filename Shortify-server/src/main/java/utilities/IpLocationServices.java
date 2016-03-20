@@ -10,7 +10,8 @@ import com.maxmind.geoip2.model.CountryResponse;
 import com.maxmind.geoip2.record.Country;
 
 /**
- * Created by Giuseppe on 08/03/2016.
+ * Contains functions to find the location of a given ip address
+ * Created by Giuseppe Perniola on 08/03/2016.
  */
 public class IpLocationServices {
 
@@ -19,8 +20,9 @@ public class IpLocationServices {
     private static final String dbPath = "/Shortify-server/src/main/java/utilities/files/GeoLite2-Country.mmdb";
     private DatabaseReader reader;
 
-    // This creates the DatabaseReader object, which should be reused across
-// lookups.
+    /**
+     * Constructor. Creates the DatabaseReader object.
+     */
     public IpLocationServices() {
         database = new File(System.getProperty("user.dir").replace("/target", "") + dbPath);
         try {
@@ -30,6 +32,13 @@ public class IpLocationServices {
         }
     }
 
+    /**
+     * Given an ip, finds which country is associated to it.
+     * @param ip
+     * @return the IsoCode of the country found from the ip.
+     * @throws IOException
+     * @throws GeoIp2Exception
+     */
     public String getCountry(String ip) throws IOException, GeoIp2Exception {
 
         InetAddress ipAddress = InetAddress.getByName(ip);

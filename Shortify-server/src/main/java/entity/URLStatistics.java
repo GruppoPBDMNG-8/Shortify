@@ -6,7 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Created by Giuseppe on 09/03/2016.
+ * Entity which contains all the statistics needed from the user on a specific long url.
+ * Contains the long url associated to the statistics, the creation date of the short url, last click date and location,
+ * the total number of clicks.
+ * Created by Giuseppe Perniola on 09/03/2016.
  */
 public class URLStatistics {
 
@@ -21,6 +24,11 @@ public class URLStatistics {
     private HashMap<String,Integer> UserLocationClicks = new HashMap<String,Integer>();
 
 
+    /**
+     * Constructor. Creates a list of Clicks and calculates the statistics from them.
+     * @param URL the long url associated to the statistics.
+     * @param stringClicks a list of strings containing Clicks in json format
+     */
     public URLStatistics(String URL, List<String> stringClicks){
         this.longURL = URL;
         List<Click> clicksList = new ArrayList<>();
@@ -31,6 +39,10 @@ public class URLStatistics {
         calculate(clicksList);
     }
 
+    /**
+     * Calculates all the statistics from a given list of Clicks
+     * @param clicksList
+     */
     private void calculate(List<Click> clicksList){
         clicksSize = clicksList.size() - 1;
         URLCreationDate = clicksList.get(0).getDate();
