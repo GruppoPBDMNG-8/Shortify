@@ -25,11 +25,13 @@ angular.module('shortifyClientApp')
 
     $scope.colours=['Blue','Red','Yellow'];
 
+
+    //GET ROUTE FOR REDIRECT AND STATISTICS
     if ($routeParams.id){
       $http.get(SERVER_ADDR + $routeParams.id )
-        .then(function(response) {
+        .then(function(response) {//GET REDIRECT
           if(response.data.redirectURL){$window.location.href = response.data.redirectURL;}
-          else {
+          else {//GET STATISTICS
             $scope.showStats = true;
             $scope.realURL = response.data.longURL;
             $scope.creation = response.data.URLCreationDate;
@@ -56,18 +58,17 @@ angular.module('shortifyClientApp')
             $scope.data2 = LocationClicks;
           }
         }) // success
-        .catch(function() {$window.location.href = '/';}); // error
+        .catch(function() {$window.location.href = '/';}); // ERROR
     }
 
 
-
+    //POST ROUTE FOR NEW SHORT URL
     $scope.createURL = function() {
       $scope.showAlerts = false;
       $scope.showSuccess = false;
       $scope.showStats = false;
 
         if ($scope.myForm.longURL.$valid && $scope.myForm.customURL.$valid ) {
-
         $http.post(SERVER_ADDR + 'inserturl',
           {
             longURL: $scope.longURL,
@@ -85,6 +86,7 @@ angular.module('shortifyClientApp')
         }
       };
   }])
+  //INSERT THE 'HTTP' STRING AT THE BEGINNING OF THE URL
   .directive('httpPrefix', function() {
   return {
     restrict: 'A',
