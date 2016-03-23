@@ -8,21 +8,8 @@
 <h5>4. Build and run the containers with: <code>docker-compose up</code></h5>
 <h5>5. Wait a few seconds for the containers to be ready, then open your browser and go to <code>http://localhost:8085</code>
 
-
-
-
-
-
-
-
 <li><h2>Windows</h2></li>
-<h5>1. Download and install <a href="https://www.docker.com/products/docker-toolbox">docker toolbox</a>. Be sure the checkbox for installing "docker compose" is checked.</h5>
-<h5>2. Run "Docker Quickstart Terminal" and follow instructions.</h5>
-
-
-
-
-
+<h5>To install Shortify on Windows, you could create a Linux VM and then follow the instruction for Linux. After the installation use the browser inside the VM. (You could use <a href = "https://www.virtualbox.org/">VirtualBox</a> and an <a href="http://www.ubuntu.com/download/desktop"> Ubuntu</a> image).</h5>
 </ul>
 
 
