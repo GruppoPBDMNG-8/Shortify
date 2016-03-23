@@ -21,7 +21,7 @@ public class Main {
      * @param args
      */
     public static void main(String[] args) {
-        new Populator(15,1000);
+        new Populator(5,50);
         setRoutes();
     }
 

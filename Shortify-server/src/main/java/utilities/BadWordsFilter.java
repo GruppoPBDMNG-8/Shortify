@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 public class BadWordsFilter {
 
-    private static final String filePath = "/Shortify-server/src/main/java/utilities/files/badwords_eng.txt";
+    private static final String filePath = "badwords_eng.txt";
     private static final ArrayList<String> badwords = new ArrayList<String>();
 
     /**
@@ -18,12 +18,9 @@ public class BadWordsFilter {
      */
     static {
 
+        InputStream is = BadWordsFilter.class.getClassLoader().getResourceAsStream(filePath);
         BufferedReader in = null;
-        try {
-            in = new BufferedReader(new FileReader(System.getProperty("user.dir").replace("/target", "") + filePath));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        in = new BufferedReader(new InputStreamReader(is));
         String str;
 
         try {

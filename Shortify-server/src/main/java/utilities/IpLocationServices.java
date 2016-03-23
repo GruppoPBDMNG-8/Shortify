@@ -2,6 +2,7 @@ package utilities;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.InetAddress;
 
 import com.maxmind.geoip2.DatabaseReader;
@@ -17,16 +18,16 @@ public class IpLocationServices {
 
     // A File object pointing to your GeoIP2 or GeoLite2 database
     private File database;
-    private static final String dbPath = "/Shortify-server/src/main/java/utilities/files/GeoLite2-Country.mmdb";
+    private static final String dbPath = "GeoLite2-Country.mmdb";
     private DatabaseReader reader;
 
     /**
      * Constructor. Creates the DatabaseReader object.
      */
     public IpLocationServices() {
-        database = new File(System.getProperty("user.dir").replace("/target", "") + dbPath);
+        InputStream is = BadWordsFilter.class.getClassLoader().getResourceAsStream(dbPath);
         try {
-            reader = new DatabaseReader.Builder(database).build();
+            reader = new DatabaseReader.Builder(is).build();
         } catch (IOException e) {
             e.printStackTrace();
         }

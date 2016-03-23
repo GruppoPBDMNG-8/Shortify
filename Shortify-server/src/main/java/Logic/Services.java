@@ -43,11 +43,8 @@ public class Services {
         JsonObject jsonShortURL = new JsonObject();
 
         if (customURL.isEmpty()) { //SHORT THE URL
-            //shortURL = URLServices.FindIfAlreadyShorted(longURL); //USE SHORT URL ALREADY INSERTED
-            //if (shortURL == "") { //CREATE A NEW SHORT URL
                 shortURL = URLServices.createShortURL(longURL);
                 if (shortURL == "") throw new MaxAttemptsException("Server error, please try another URL");
-          //  }
         }
         else { // USE CUSTOM URL
             if (BadWordsFilter.isBadword(customURL)) throw new BadWordException("Custom URL not available, please try a different one");
