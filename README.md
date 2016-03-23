@@ -16,7 +16,8 @@
 
 
 <li><h2>Windows</h2></li>
-<h5>1. Download and install <a href="https://www.docker.com/products/docker-toolbox">docker toolbox</a></h5>
+<h5>1. Download and install <a href="https://www.docker.com/products/docker-toolbox">docker toolbox</a>. Be sure the checkbox for installing "docker compose" is checked.</h5>
+<h5>2. Run "Docker Quickstart Terminal" and follow instructions.</h5>
 
 
 
