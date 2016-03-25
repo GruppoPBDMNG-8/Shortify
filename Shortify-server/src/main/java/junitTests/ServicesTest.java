@@ -47,6 +47,14 @@ public class ServicesTest {
     }
 
 
+    /**
+     * Tests if given a longURL the function returns the correct shortURL in Json string format after memorizing it in the db
+     * @throws Exception
+     * @throws MaxAttemptsException
+     * @throws CustomUrlUnavailableException
+     * @throws BadWordException
+     * @throws BlankUrlException
+     */
     @Test
     public void testSetShortURL() throws Exception, MaxAttemptsException, CustomUrlUnavailableException, BadWordException, BlankUrlException {
         System.out.println( "Executing " +
@@ -56,6 +64,14 @@ public class ServicesTest {
         assertEquals(expectedResult,result);
     }
 
+    /**
+     * Tests if given a longURL and a customURL the function returns back the customURL in Json string format after memorizing it in the db
+     * @throws Exception
+     * @throws MaxAttemptsException
+     * @throws CustomUrlUnavailableException
+     * @throws BadWordException
+     * @throws BlankUrlException
+     */
     @Test
     public void testSetShortURL_customURL() throws Exception, MaxAttemptsException, CustomUrlUnavailableException, BadWordException, BlankUrlException {
         System.out.println( "Executing " +
@@ -65,6 +81,14 @@ public class ServicesTest {
         assertEquals(expectedResult,result);
     }
 
+    /**
+     * Tests if given a customURL already present in the database the function returns the correct exception.
+     * @throws Exception
+     * @throws MaxAttemptsException
+     * @throws CustomUrlUnavailableException
+     * @throws BadWordException
+     * @throws BlankUrlException
+     */
     @Test (expected = CustomUrlUnavailableException.class)
     public void testSetShortURL_CustomUrlUnavailable() throws Exception, MaxAttemptsException, CustomUrlUnavailableException, BadWordException, BlankUrlException {
         System.out.println( "Executing " +
@@ -73,6 +97,14 @@ public class ServicesTest {
         result = Services.setShortURL(longURL, customURL, ip, userAgent);
     }
 
+    /**
+     * Tests if given a forbidden customURL the function returns the correct exception.
+     * @throws Exception
+     * @throws MaxAttemptsException
+     * @throws CustomUrlUnavailableException
+     * @throws BadWordException
+     * @throws BlankUrlException
+     */
     @Test (expected = BadWordException.class)
     public void testSetShortURL_BadWord() throws Exception, MaxAttemptsException, CustomUrlUnavailableException, BadWordException, BlankUrlException {
         System.out.println( "Executing " +
@@ -80,6 +112,14 @@ public class ServicesTest {
         String result = Services.setShortURL(longURL, badword, ip, userAgent);
     }
 
+    /**
+     * Tests if given an empty longURL the function returns the correct exception.
+     * @throws Exception
+     * @throws MaxAttemptsException
+     * @throws CustomUrlUnavailableException
+     * @throws BadWordException
+     * @throws BlankUrlException
+     */
     @Test (expected = BlankUrlException.class)
     public void testSetShortURL_BlankUrl() throws Exception, MaxAttemptsException, CustomUrlUnavailableException, BadWordException, BlankUrlException {
         System.out.println( "Executing " +
@@ -87,8 +127,12 @@ public class ServicesTest {
         String result = Services.setShortURL("", "", ip, userAgent);
     }
 
-
-
+    /**
+     * Tests if given a shortURL the function fetch the correct related longURL from the database and returns it in Json string format.
+     * @throws Exception
+     * @throws EmptyClicksException
+     * @throws UrlNotPresentException
+     */
     @Test
     public void testRedirectURL_getLongURL() throws Exception, EmptyClicksException, UrlNotPresentException {
         System.out.println( "Executing " +
@@ -100,6 +144,17 @@ public class ServicesTest {
         assertEquals(expectedResult,result);
     }
 
+    /**
+     * Tests if given a shortURL with + at the end, the function fetch the clicks from the database, calculates the statistics and returns
+     * them
+     * @throws Exception
+     * @throws EmptyClicksException
+     * @throws UrlNotPresentException
+     * @throws MaxAttemptsException
+     * @throws CustomUrlUnavailableException
+     * @throws BadWordException
+     * @throws BlankUrlException
+     */
     @Test
     public void testRedirectURL_getStatistics() throws Exception, EmptyClicksException, UrlNotPresentException,
             MaxAttemptsException, CustomUrlUnavailableException, BadWordException, BlankUrlException {
@@ -110,6 +165,12 @@ public class ServicesTest {
         assertNotNull(result);
     }
 
+    /**
+     * Tests if given a shortURL not present in the database the function returns the correct exception.
+     * @throws Exception
+     * @throws EmptyClicksException
+     * @throws UrlNotPresentException
+     */
     @Test (expected = UrlNotPresentException.class)
     public void testRedirectURL_UrlNotPresent() throws Exception, EmptyClicksException, UrlNotPresentException {
         System.out.println( "Executing " +
@@ -117,6 +178,14 @@ public class ServicesTest {
         String result = Services.redirectURL(customURL,ip,userAgent);
     }
 
+    /**
+     * Tests if given a shortURL with no clicks associated the function returns the correct exception.
+     * NOTE: This is an error because a memorized shortURL must always have at least one click (information about
+     * the user who created the shortURL)
+     * @throws Exception
+     * @throws EmptyClicksException
+     * @throws UrlNotPresentException
+     */
     @Test (expected = EmptyClicksException.class)
     public void testRedirectURL_EmptyClicks() throws Exception, EmptyClicksException, UrlNotPresentException {
         System.out.println( "Executing " +

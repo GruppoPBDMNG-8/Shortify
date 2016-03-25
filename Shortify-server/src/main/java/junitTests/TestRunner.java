@@ -9,6 +9,10 @@ import org.junit.runner.notification.Failure;
  * Created by Giuseppe on 18/03/2016.
  */
 public class TestRunner {
+    /**
+     * Executes all tests
+     * @param args
+     */
     public static void main(String[] args) {
         Result result = JUnitCore.runClasses(ServicesTest.class);
         for (Failure failure : result.getFailures()) {

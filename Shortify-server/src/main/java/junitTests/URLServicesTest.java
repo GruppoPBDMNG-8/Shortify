@@ -43,6 +43,10 @@ public class URLServicesTest {
         Services.deleteURL(hashedShortURL);
     }
 
+    /**
+     * Tests if given a longURL the function returns the correct trimmed hash to use a shortURL
+     * @throws Exception
+     */
     @Test
     public void testCreateShortURL() throws Exception {
         System.out.println( "Executing " +
@@ -52,6 +56,14 @@ public class URLServicesTest {
         assertEquals(expectedResult,result);
     }
 
+    /**
+     * Tests if given a longURL already present in the database, the function returns the correct shortURL
+     * @throws Exception
+     * @throws MaxAttemptsException
+     * @throws CustomUrlUnavailableException
+     * @throws BadWordException
+     * @throws BlankUrlException
+     */
     @Test
     public void testCreateShortURL_alreadyExistent() throws Exception, MaxAttemptsException, CustomUrlUnavailableException,
             BadWordException, BlankUrlException {
