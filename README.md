@@ -15,7 +15,17 @@
 3. Results of the tests will be shown in the terminal.<br>
 
 <li><h2>Windows via <a href="https://www.docker.com/products/docker-toolbox">Docker Toolbox</a></h2></li>
-<h5>To install Shortify on Windows, you could create a Linux VM and then follow the instruction for Linux. After the installation use the browser inside the VM. (You could use <a href = "https://www.virtualbox.org/">VirtualBox</a> and an <a href="http://www.ubuntu.com/download/desktop"> Ubuntu</a> image).</h5>
-</ul>
+1. Install <a href="https://www.docker.com/products/docker-toolbox">Docker Toolbox</a> and follow instruction.<br>
+<strong>IMPORTANT:</strong> Be sure to install <a href="https://docs.docker.com/compose/install/">docker-compose</a> and <a href="https://git-scm.com/">git</a> by ticking the checkboxes during the installation.<br><br>
+2. Open the Docker Quickstart Terminal, it should be on your desktop.<br><br>
+3. Once ready, take note of your virtual machine ip address (<a href="http://s12.postimg.org/52b7kxam5/dockertool.png">shown here</a>).<br><br>
+4. Create a new folder and clone this repo with <a href="https://git-scm.com/">git</a>:<br>
+<code>git clone https://github.com/GruppoPBDMNG-8/Shortify</code><br><br>
+5. Navigate into the "Shortify" folder:<br><code>cd Shortify</code><br><br>
+6. Execute this script:<br><code>bash ipchanger.sh</code><br> The, insert your virtual machine ip address.<br><br>
+7. Build and run the containers with:<br><code>docker-compose up</code><br>
+...It may take a while, so go on and grab a coffee. <img src="https://cdn3.iconfinder.com/data/icons/pidginsmilies/coffee.png"><br><br>
+8. Once ready, open your browser and go to <code>http://<your VM ip>:8085 (example: http://192.168.99.100:8085)</code><br>
+
 
 
