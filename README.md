@@ -7,7 +7,11 @@
 3. Navigate into the "Shortify" folder:<br><code>cd Shortify</code><br><br>
 4. Build and run the containers with:<br><code>docker-compose up</code><br>
 ...It may take a while, so go on and grab a coffee. <img src="https://cdn3.iconfinder.com/data/icons/pidginsmilies/coffee.png"><br><br>
-5. Once ready, open your browser and go to <code>http://localhost:8085</code>
+5. Once ready, open your browser and go to <code>http://localhost:8085</code><br>
+
+<h3>Execute JUnit tests</h3>
+1. Run containers in detached mode:<br><code>docker-compose up -d</code><br>NOTE: If containers are already running stop them with CTRL+C<br><br>
+2. Run this script with docker:<br><code> docker exec -it shortify_server_1 bash test.sh</code><br>
 
 <li><h2>Windows</h2></li>
 <h5>To install Shortify on Windows, you could create a Linux VM and then follow the instruction for Linux. After the installation use the browser inside the VM. (You could use <a href = "https://www.virtualbox.org/">VirtualBox</a> and an <a href="http://www.ubuntu.com/download/desktop"> Ubuntu</a> image).</h5>
