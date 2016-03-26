@@ -25,7 +25,7 @@
 6. Execute this script:<br><code>bash ipchanger.sh</code><br> Then, insert your virtual machine ip address.<br><br>
 7. Build and run the containers with:<br><code>docker-compose up</code><br>
 ...It may take a while, so go on and grab a coffee. <img src="https://cdn3.iconfinder.com/data/icons/pidginsmilies/coffee.png"><br><br>
-8. Once ready, open your browser and go to <code>http://<your VM ip>:8085 (example: http://192.168.99.100:8085)</code><br>
+8. Once ready, open your browser and go to <code>http://(your VM ip):8085 (example: http://192.168.99.100:8085)</code><br>
 
 <h3>Execute JUnit tests</h3>
 1. Run containers in detached mode:<br><code>docker-compose up -d</code><br>NOTE: If containers are already running stop them with CTRL+C<br><br>
