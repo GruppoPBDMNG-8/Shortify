@@ -27,5 +27,10 @@
 ...It may take a while, so go on and grab a coffee. <img src="https://cdn3.iconfinder.com/data/icons/pidginsmilies/coffee.png"><br><br>
 8. Once ready, open your browser and go to <code>http://<your VM ip>:8085 (example: http://192.168.99.100:8085)</code><br>
 
+<h3>Execute JUnit tests</h3>
+1. Run containers in detached mode:<br><code>docker-compose up -d</code><br>NOTE: If containers are already running stop them with CTRL+C<br><br>
+2. Run this script with docker:<br><code>docker exec -it shortify_server_1 /usr/lib/jvm/java-8-openjdk-amd64/bin/java -jar target/shortify-server-test-jar-with-dependencies.jar</code><br><br>
+3. Results of the tests will be shown in the terminal.<br>
+
 
 
