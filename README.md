@@ -5,7 +5,8 @@
 <h5>2. Create a new folder on your  machine and clone this repo with <a href="https://git-scm.com/">git</a>:<br>
 <code>git clone https://github.com/GruppoPBDMNG-8/Shortify</code></h5>
 <h5>3. Navigate into the "Shortify" folder: <code>cd Shortify</code></h5>
-<h5>4. Build and run the containers with: <code>docker-compose up</code> It may take a while, so go on and grab a coffee.</h5>
+<h5>4. Build and run the containers with: <code>docker-compose up</code> 
+...It may take a while, so go on and grab a coffee.</h5>
 <h5>5. Once ready, open your browser and go to <code>http://localhost:8085</code>
 
 <li><h2>Windows</h2></li>
