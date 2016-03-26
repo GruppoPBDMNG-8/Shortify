@@ -14,7 +14,7 @@
 2. Run this script with docker:<br><code> docker exec -it shortify_server_1 bash test.sh</code><br><br>
 3. Results of the tests will be shown in the terminal.<br>
 
-<li><h2>Windows</h2></li>
+<li><h2>Windows via <a href="https://www.docker.com/products/docker-toolbox">Docker Toolbox</a></h2></li>
 <h5>To install Shortify on Windows, you could create a Linux VM and then follow the instruction for Linux. After the installation use the browser inside the VM. (You could use <a href = "https://www.virtualbox.org/">VirtualBox</a> and an <a href="http://www.ubuntu.com/download/desktop"> Ubuntu</a> image).</h5>
 </ul>
 
