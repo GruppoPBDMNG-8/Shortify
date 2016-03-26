@@ -22,7 +22,7 @@
 4. Create a new folder and clone this repo with <a href="https://git-scm.com/">git</a>:<br>
 <code>git clone https://github.com/GruppoPBDMNG-8/Shortify</code><br><br>
 5. Navigate into the "Shortify" folder:<br><code>cd Shortify</code><br><br>
-6. Execute this script:<br><code>bash ipchanger.sh</code><br> The, insert your virtual machine ip address.<br><br>
+6. Execute this script:<br><code>bash ipchanger.sh</code><br> Then, insert your virtual machine ip address.<br><br>
 7. Build and run the containers with:<br><code>docker-compose up</code><br>
 ...It may take a while, so go on and grab a coffee. <img src="https://cdn3.iconfinder.com/data/icons/pidginsmilies/coffee.png"><br><br>
 8. Once ready, open your browser and go to <code>http://<your VM ip>:8085 (example: http://192.168.99.100:8085)</code><br>
