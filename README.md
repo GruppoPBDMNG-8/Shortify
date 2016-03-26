@@ -1,12 +1,12 @@
 # Shortify installation guide
 
 <ul><li><h2>Linux</h2></li>
-<h5>1. Install <a href="https://docs.docker.com/compose/install/">docker-compose</a> (be sure to have already installed <a href="https://docs.docker.com/linux/step_one/">docker</a> before on your machine)</h5>
+<h5>1.</h5> Install <a href="https://docs.docker.com/compose/install/">docker-compose</a> (you need docker-compose v1.6 or greater, be sure to have already installed <a href="https://docs.docker.com/linux/step_one/">docker</a> before on your machine)<br>
 <h5>2. Create a new folder on your  machine and clone this repo with <a href="https://git-scm.com/">git</a>:<br>
 <code>git clone https://github.com/GruppoPBDMNG-8/Shortify</code></h5>
 <h5>3. Navigate into the "Shortify" folder: <code>cd Shortify</code></h5>
-<h5>4. Build and run the containers with: <code>docker-compose up</code> 
- ...It may take a while, so go on and grab a coffee.</h5> <img src="https://cdn3.iconfinder.com/data/icons/pidginsmilies/coffee.png">
+<h5>4. Build and run the containers with: <code>docker-compose up</code><br>
+...It may take a while, so go on and grab a coffee.</h5> <img src="https://cdn3.iconfinder.com/data/icons/pidginsmilies/coffee.png">
 <h5>5. Once ready, open your browser and go to <code>http://localhost:8085</code>
 
 <li><h2>Windows</h2></li>
