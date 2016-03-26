@@ -6,7 +6,7 @@
 <code>git clone https://github.com/GruppoPBDMNG-8/Shortify</code></h5>
 <h5>3. Navigate into the "Shortify" folder: <code>cd Shortify</code></h5>
 <h5>4. Build and run the containers with: <code>docker-compose up</code> 
-...It may take a while, so go on and grab a coffee.</h5>
+ ...It may take a while, so go on and grab a coffee.</h5> <img src="https://cdn3.iconfinder.com/data/icons/pidginsmilies/coffee.png">
 <h5>5. Once ready, open your browser and go to <code>http://localhost:8085</code>
 
 <li><h2>Windows</h2></li>
