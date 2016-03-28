@@ -10,8 +10,6 @@ Y="e=\"http://"
 Y+="$text"
 Y+=":4567/\""
 
-#sed -i -e 's/'"$X"/$Y/g" Shortify-client/distributionFiles/scripts/scripts.de69d7be.js
-
 sed -i "s@$X@$Y@" Shortify-client/distributionFiles/scripts/scripts.de69d7be.js
 
 echo done!
