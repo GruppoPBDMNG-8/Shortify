@@ -7,6 +7,9 @@ EXPOSE 4567
 RUN apt-get update
 RUN apt-get install -y maven
 
+#install dos2unix to run test.sh from windows
+RUN apt-get install -y dos2unix
+
 WORKDIR /code
 
 COPY . /code
