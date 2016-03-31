@@ -10,7 +10,7 @@
 angular.module('shortifyClientApp')
   .controller('MainCtrl',['$window','$scope','$routeParams','$http', function ($window, $scope,$routeParams, $http ) {
 
-    const SERVER_ADDR = 'http://localhost:4567/';
+    const SERVER_ADDR = 'http://' + location.hostname + ':4567/';
     const loc = 'http://' + location.host + '/#/';
 
     $scope.exampleurlpath = loc + 'example+';
