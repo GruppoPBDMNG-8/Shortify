@@ -28,7 +28,7 @@
 
 <h3>Execute JUnit tests</h3>
 1. Run containers in detached mode:<br><code>docker-compose up -d</code><br>NOTE: If containers are already running stop them with CTRL+C<br><br>
-2. Convert test.sh with <a href="http://www.linuxcommand.org/man_pages/dos2unix1.html">dos2unix</a>:<code><br> docker exec -it shortify_server_1 dos2unix test.sh</code><br><br>
+2. Convert test.sh with <a href="http://www.linuxcommand.org/man_pages/dos2unix1.html">dos2unix</a>:<br><code>docker exec -it shortify_server_1 dos2unix test.sh</code><br><br>
 3. Run this script with docker:<br><code> docker exec -it shortify_server_1 bash test.sh</code><br><br>
 4. Results of the tests will be shown in the terminal.<br>
 
